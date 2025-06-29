@@ -196,10 +196,12 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="min-h-screen bg-gray-50 flex flex-col">
             <header class="bg-white shadow-sm border-b">
                 <div class="max-w-4xl mx-auto px-4 py-6">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">The No BS Policy</h1>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-4">The No Bullshit Policy</h1>
                     <nav class="flex space-x-6">
                         <a href="/" class="nav-link text-blue-600 hover:text-blue-800 font-medium">Latest</a>
-                        <a href="/policies" class="nav-link text-gray-600 hover:text-gray-800 font-medium">All Versions</a>
+                        <a href="https://github.com/ezrafayet/the-no-bs-policy/tree/main/app/policies" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">All Versions</a>
+                        <a href="https://github.com/ezrafayet/the-no-bs-policy" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">GitHub & Contribute</a>
+                        <a href="https://x.com/nohokthen" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">Contact</a>
                     </nav>
                 </div>
             </header>
@@ -210,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <footer class="bg-white border-t mt-auto">
                 <div class="max-w-4xl mx-auto px-4 py-6">
-                    <p class="text-center text-gray-600">&copy; 2024 The No BS Policy. No bullshit, just policies.</p>
+                    <p class="text-center text-gray-600">&copy; 2025 The no bullshit policy project</p>
                 </div>
             </footer>
         </div>

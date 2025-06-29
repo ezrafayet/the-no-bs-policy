@@ -2,7 +2,9 @@
 
 This repository is hosting the code for [https://the-no-bs-policy.xyz](https://the-no-bs-policy.xyz).
 
-I vibe coded it to host it quickly and didnt even review the code so don't expect anything fancy. Basically it takes the latest version in /app/policies and displays it on the main page
+I vibe coded it to host it quickly and didnt even review the code so don't expect anything fancy. Basically it takes the latest version in /app/policies and displays it on the main page.
+
+I saw it is even loading all existing policies on home page... Wont fix it now.
 
 Check the scrips in package.json (classic stuff)
 
