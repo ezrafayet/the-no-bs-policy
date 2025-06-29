@@ -216,9 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
     `;
     
-    // Import Tailwind CSS
-    import('./style.css');
-    
+    // Handle navigation
     handleNavigation();
     
     // Handle browser back/forward
@@ -233,4 +231,12 @@ document.addEventListener('DOMContentLoaded', () => {
             handleNavigation();
         }
     });
+    
+    // Hide loading overlay after a short delay to ensure everything is rendered
+    setTimeout(() => {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            loadingOverlay.classList.add('hidden');
+        }
+    }, 100);
 }); 
