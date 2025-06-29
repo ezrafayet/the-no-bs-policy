@@ -14,36 +14,71 @@ function markdownToHtml(markdown) {
         .replace(/\*([^*]+)\*/g, '<em>$1</em>');
 }
 
-// Get all policy files and find the latest
-async function getLatestPolicy() {
+// Global policies cache
+let policiesCache = null;
+
+// Load policies data (works for both dev and production)
+async function loadPoliciesData() {
+    if (policiesCache) {
+        return policiesCache;
+    }
+    
+    try {
+        // Try to load from static file first (production)
+        const response = await fetch('/policies-data.json');
+        if (response.ok) {
+            policiesCache = await response.json();
+            return policiesCache;
+        }
+    } catch (error) {
+        // Fall back to API (development)
+        console.log('Using development API for policies');
+    }
+    
     try {
         const response = await fetch('/api/policies');
         const policies = await response.json();
         
-        if (policies.length === 0) {
-            return null;
+        // For dev API, we need to fetch full content for each policy
+        const fullPolicies = [];
+        for (const policy of policies) {
+            const fullResponse = await fetch(`/api/policies/${policy.version}`);
+            const fullPolicy = await fullResponse.json();
+            fullPolicies.push(fullPolicy);
         }
         
-        // Sort by version and get the latest
-        const sortedPolicies = policies.sort((a, b) => {
-            const versionA = a.version.split('.').map(Number);
-            const versionB = b.version.split('.').map(Number);
-            
-            for (let i = 0; i < Math.max(versionA.length, versionB.length); i++) {
-                const aVal = versionA[i] || 0;
-                const bVal = versionB[i] || 0;
-                if (aVal !== bVal) {
-                    return bVal - aVal; // Descending order
-                }
-            }
-            return 0;
-        });
-        
-        return sortedPolicies[0];
+        policiesCache = fullPolicies;
+        return policiesCache;
     } catch (error) {
-        console.error('Error fetching policies:', error);
+        console.error('Error loading policies:', error);
+        return [];
+    }
+}
+
+// Get all policy files and find the latest
+async function getLatestPolicy() {
+    const policies = await loadPoliciesData();
+    
+    if (policies.length === 0) {
         return null;
     }
+    
+    // Sort by version and get the latest
+    const sortedPolicies = policies.sort((a, b) => {
+        const versionA = a.version.split('.').map(Number);
+        const versionB = b.version.split('.').map(Number);
+        
+        for (let i = 0; i < Math.max(versionA.length, versionB.length); i++) {
+            const aVal = versionA[i] || 0;
+            const bVal = versionB[i] || 0;
+            if (aVal !== bVal) {
+                return bVal - aVal; // Descending order
+            }
+        }
+        return 0;
+    });
+    
+    return sortedPolicies[0];
 }
 
 // Load and display a policy
@@ -52,8 +87,8 @@ async function loadPolicy(version) {
     content.innerHTML = '<div class="text-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div></div>';
     
     try {
-        const response = await fetch(`/api/policies/${version}`);
-        const policy = await response.json();
+        const policies = await loadPoliciesData();
+        const policy = policies.find(p => p.version === version);
         
         if (!policy) {
             content.innerHTML = '<div class="text-center py-8 text-red-600">Policy not found</div>';
@@ -106,8 +141,7 @@ async function showAllPolicies() {
     content.innerHTML = '<div class="text-center py-8"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div></div>';
     
     try {
-        const response = await fetch('/api/policies');
-        const policies = await response.json();
+        const policies = await loadPoliciesData();
         
         if (policies.length === 0) {
             content.innerHTML = '<div class="text-center py-8 text-gray-600">No policies found</div>';

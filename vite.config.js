@@ -1,6 +1,7 @@
 const { defineConfig } = require('vite')
 const { readdir, readFile, stat } = require('fs/promises')
 const { join } = require('path')
+const fs = require('fs')
 
 module.exports = defineConfig({
   plugins: [
@@ -57,6 +58,41 @@ module.exports = defineConfig({
             res.end(JSON.stringify({ error: 'Internal server error' }))
           }
         })
+      }
+    },
+    {
+      name: 'static-policies',
+      async writeBundle() {
+        // This runs during build time
+        try {
+          const policiesDir = join(__dirname, 'app/policies')
+          const distDir = join(__dirname, 'dist')
+          const files = await readdir(policiesDir)
+          const markdownFiles = files.filter(file => file.endsWith('.md'))
+          
+          // Create policies data file
+          const policies = []
+          for (const file of markdownFiles) {
+            const version = file.replace('.md', '')
+            const filePath = join(policiesDir, file)
+            const stats = await stat(filePath)
+            const content = await readFile(filePath, 'utf-8')
+            
+            policies.push({
+              version,
+              content,
+              lastModified: stats.mtime
+            })
+          }
+          
+          // Write policies data to dist
+          const policiesDataPath = join(distDir, 'policies-data.json')
+          fs.writeFileSync(policiesDataPath, JSON.stringify(policies, null, 2))
+          
+          console.log(`✅ Built ${policies.length} policies for static hosting`)
+        } catch (error) {
+          console.error('Error building policies:', error)
+        }
       }
     }
   ]
