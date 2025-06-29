@@ -1,0 +1,20 @@
+{
+  "name": "the-no-bs-policy",
+  "version": "0.1.0",
+  "description": "This repository hosts the code for [https://the-no-bs-policy.xyz](https://the-no-bs-policy.xyz)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.3.5"
+  }
+}
