@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <a href="/" class="nav-link text-blue-600 hover:text-blue-800 font-medium">Latest</a>
                         <a href="https://github.com/ezrafayet/the-no-bs-policy/tree/main/app/policies" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">All Versions</a>
                         <a href="https://github.com/ezrafayet/the-no-bs-policy" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">GitHub & Contribute</a>
-                        <a href="https://x.com/nohokthen" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">Contact</a>
+                        <a href="https://x.com/nohokthen" target="_blank" rel="noopener noreferrer" class="nav-link text-gray-600 hover:text-gray-800 font-medium">Contact on X</a>
                     </nav>
                 </div>
             </header>
